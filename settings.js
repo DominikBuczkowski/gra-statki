@@ -23,9 +23,8 @@ function setup() {
     player.style.backgroundPosition = 'center';
     player.style.backgroundColor = 'red';
     player.style.position = 'absolute';
-    player.style.right = (screen_dimensions[0] / 2) - 50 + 'px';
-    player.style.top = (screen_dimensions[1] / 2) - 45 + 'px';
-
+    player.style.transform = 'rotate(-90deg)';
+    main.style.cursor = 'none';
 
     main.appendChild(player);
 }
@@ -33,49 +32,42 @@ function setup() {
 
 document.addEventListener('DOMContentLoaded', () => {
     setup();
-});
 
-function move(direction) {
-    
-    if ((direction == 'left') || (direction == 'right')) {
+    const mousePosText = document.getElementById('mouse-pos');
+        let mousePos = { x: undefined, y: undefined };
 
-        var postion = (player.style.right).match(/\d+/g);
-        postion = parseInt(postion);
+        window.addEventListener('mousemove', (event) => {
+        mousePos = { x: event.clientX, y: event.clientY };
 
-        if (direction == 'left') {
-
-            console.log(postion)
-            player.style.right = (postion + 10) + 'px';
+        if (mousePos.x <= 90) { 
+            player.style.left = 45 + 'px';
+        }
+        else if (mousePos.x >= (window.innerWidth - 98)) {
+            
+        }
+        else {
+            player.style.left = (mousePos.x - 45) + 'px';
         }
 
-        if (direction == 'right') {
-
-            console.log(postion)
-            player.style.right = (postion - 10) + 'px';
+        if (mousePos.y <= 100) {
+            player.style.top = 55 + 'px';
         }
-    }
-    
+        else if (mousePos.y >= (window.innerHeight - 93)) {
+            
+        }
+        else {
+            player.style.top = (mousePos.y - 50) + 'px';
+        }
 
-}
+        });
 
-document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function(event) {
+            if(event.keyCode == 32) {
+                console.log('space');
+            }
+        });
 
-    if(event.keyCode == 37) {
-        var direction = 'left';
-        move(direction);
-    }
-    if(event.keyCode == 38) {
-        console.log('up');
-    }
-    if(event.keyCode == 39) {
-        var direction = 'right';
-        move(direction);
-    }
-    if(event.keyCode == 40) {
-        console.log('down');
-    }
-    if(event.keyCode == 32) {
-        console.log('space');
-    }
+
 
 });
+
